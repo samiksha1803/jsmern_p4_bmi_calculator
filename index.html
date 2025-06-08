@@ -1,0 +1,151 @@
+<html>
+<head>
+  <title>BMI Calculator App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Cambria, serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 30px;
+      color: #4a148c;
+      text-align: center;
+    }
+
+    label {
+      font-size: 22px;
+      color: #333;
+      display: block;
+      margin-top: 20px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1.5px solid #bbb;
+      font-size: 18px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 20px;
+      background: linear-gradient(to right, #7b1fa2, #512da8);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(to right, #512da8, #7b1fa2);
+    }
+
+    #msg {
+      margin-top: 25px;
+      font-size: 24px;
+      color: #1a237e;
+      font-weight: bold;
+      min-height: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form onsubmit="calculate()">
+      <h1>BMI Calculator App</h1>
+
+      <label>Enter Weight (kg)</label>
+      <input type="number" id="weight" step="0.01" />
+
+      <label>Enter Height (cm)</label>
+      <input type="number" id="height" step="0.01" />
+
+      <input type="submit" value="Calculate BMI" />
+      <h2 id="msg"></h2>
+    </form>
+  </div>
+
+  <script>
+    function calculate() {
+      event.preventDefault();
+
+      let height = document.getElementById("height");
+      let weight = document.getElementById("weight");
+      let msg = document.getElementById("msg");
+
+      if (height.value === "") {
+        alert("Please enter height!!");
+        msg.innerHTML = "";
+        height.focus();
+        return;
+      }
+
+      if (weight.value === "") {
+        alert("Please enter weight!!");
+        msg.innerHTML = "";
+        weight.focus();
+        return;
+      }
+
+      let w = parseFloat(weight.value);
+      let h = parseFloat(height.value);
+
+      if (w <= 0) {
+        alert("Please enter valid weight!!");
+        msg.innerHTML = "";
+        weight.focus();
+        return;
+      }
+
+      if (h <= 0) {
+        alert("Please enter valid height!!");
+        msg.innerHTML = "";
+        height.focus();
+        return;
+      }
+
+      h = h / 100;
+      let bmi = w / (h * h);
+
+      let category = "";
+      if (bmi < 18.5) category = "Underweight";
+      else if (bmi < 24.9) category = "Normal weight";
+      else if (bmi < 29.9) category = "Overweight";
+      else category = "Obese";
+
+      msg.innerHTML = "BMI: " + bmi.toFixed(2) + " | Category: " + category;
+    }
+  </script>
+</body>
+</html>
